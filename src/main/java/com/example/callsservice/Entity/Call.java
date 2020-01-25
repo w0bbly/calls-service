@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Getter
@@ -33,4 +30,6 @@ public class Call {
     private Timestamp endTimestamp;
     @Column(nullable = false, name = "type")
     private Type type;
+    @Transient
+    private Double totalPrice;
 }
