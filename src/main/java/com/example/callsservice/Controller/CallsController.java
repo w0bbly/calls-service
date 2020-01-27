@@ -1,6 +1,7 @@
 package com.example.callsservice.Controller;
 
 import com.example.callsservice.DTO.CallDTO;
+import com.example.callsservice.DTO.StatsDTO;
 import com.example.callsservice.Entity.Call;
 import com.example.callsservice.Service.CallService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping(path = "/calls")
@@ -21,8 +23,29 @@ public class CallsController {
     private CallService callService;
 
     @GetMapping(path = "/all")
-    public ResponseEntity getAllCalls(@RequestParam Call.Type type, Pageable pageable) {
+    public ResponseEntity<Page<CallDTO>> getAllCalls(@RequestParam(required = false) Call.Type type, Pageable pageable) {
         Page<CallDTO> callDTO = callService.getAllCalls(type, pageable);
         return ResponseEntity.ok(callDTO);
+    }
+
+    @PostMapping
+    public ResponseEntity<List<CallDTO>> createCall(@RequestBody @Valid List<CallDTO> calls) {
+        return ResponseEntity.ok(callService.createCalls(calls));
+    }
+
+    @GetMapping(path = "/statistics")
+    public ResponseEntity<List<StatsDTO>> getStatistics() {
+        return ResponseEntity.ok(callService.getStatistics());
+    }
+
+    @DeleteMapping(path = "/all")
+    public ResponseEntity<String> deleteAllCalls() { return ResponseEntity.ok(callService.deleteAllCalls()); }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<String> deleteCallById(@PathVariable Long id) {
+        String response = callService.deleteCallById(id);
+        if (response.contains("Error")) {
+            return ResponseEntity.status(401).body(response);
+        } else return ResponseEntity.ok(response);
     }
 }

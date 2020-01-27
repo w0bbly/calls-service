@@ -5,16 +5,22 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Getter
 @Setter
 @ToString
 public class CallDTO {
-    private Long id;
+    @NotNull
     private String callerNumber;
+    @NotNull
     private String calleeNumber;
-    private Timestamp startTimestamp;
-    private Timestamp endTimestamp;
+    @NotNull
+    private Date startTime;
+    @NotNull
+    private Date endTime;
+    @NotNull
     private Call.Type type;
 }

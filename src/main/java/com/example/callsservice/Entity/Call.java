@@ -6,10 +6,13 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Getter
 @Setter
 @ToString
+@Table
+@Entity(name = "call")
 public class Call {
 
     public enum Type {
@@ -24,10 +27,10 @@ public class Call {
     private String callerNumber;
     @Column(nullable = false, length = 9, name = "callee")
     private String calleeNumber;
-    @Column(nullable = false, name = "start")
-    private Timestamp startTimestamp;
-    @Column(nullable = false, name = "end")
-    private Timestamp endTimestamp;
+    @Column(nullable = false)
+    private Date startTime;
+    @Column(nullable = false)
+    private Date endTime;
     @Column(nullable = false, name = "type")
     private Type type;
     @Transient
