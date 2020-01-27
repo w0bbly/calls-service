@@ -74,7 +74,6 @@ public class CallService {
         HashMap<String, Integer> mapCallee = new HashMap<>();
         HashMap<String, Integer> mapCallers = new HashMap<>();
 
-        //primeiro encontrar os dias em que existem calls
         calls.forEach(call -> {
             if(mapDates.isEmpty()) {
                 mapDates.put(getZeroTimeDate(call.getStartTime()), 1);
@@ -86,7 +85,6 @@ public class CallService {
 
         mapDates.forEach((date, integer) -> stats.add(initialize(date)));
 
-        //depois calcular estatisticas para cada um desses dias
         for (int i = 0; i < stats.size(); i++) {
             AtomicLong diffInbound = new AtomicLong(0L);
             AtomicLong diffOutbound = new AtomicLong(0L);
@@ -98,7 +96,6 @@ public class CallService {
             mapCallee.clear();
 
             callTemp.forEach(call -> {
-                //calcular tempo de inbound/outbound calls
                 if (call.getType().toString().equals(Call.Type.INBOUND.toString())) {
                     diffInbound.addAndGet((call.getEndTime().getTime() - call.getStartTime().getTime()));
                     int countHours = (int) diffInbound.get() / (60 * 60 * 1000);
@@ -115,7 +112,6 @@ public class CallService {
                     stats.get(finalI).setTotalCallTimeOutbound(countHours + "h:" + countMinutes + "m");
                 }
 
-                //verificar numero de calls by callee number
                 if (!mapCallee.isEmpty()) {
                     if (mapCallee.containsKey(call.getCalleeNumber())) {
                         mapCallee.put(call.getCalleeNumber(), mapCallee.get(call.getCalleeNumber()) + 1);
@@ -125,7 +121,6 @@ public class CallService {
                     mapCallee.put(call.getCalleeNumber(), 1);
                 }
 
-                //verificar numero de calls by caller number
                 if (!mapCallers.isEmpty()) {
                     if (mapCallers.containsKey(call.getCallerNumber())) {
                         mapCallers.put(call.getCallerNumber(), mapCallers.get(call.getCallerNumber()) + 1);
@@ -135,7 +130,6 @@ public class CallService {
                     mapCallers.put(call.getCallerNumber(), 1);
                 }
 
-                //total call cost
                 if (call.getType().equals(Call.Type.OUTBOUND)) {
                     long callTimeInMinutes = (call.getEndTime().getTime() - call.getStartTime().getTime()) / (60 * 1000);
                     double callCost;
