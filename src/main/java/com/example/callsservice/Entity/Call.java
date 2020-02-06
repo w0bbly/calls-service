@@ -1,11 +1,8 @@
 package com.example.callsservice.Entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Getter
@@ -13,6 +10,8 @@ import java.util.Date;
 @ToString
 @Table
 @Entity(name = "call")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Call {
 
     public enum Type {

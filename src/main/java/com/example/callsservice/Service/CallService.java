@@ -7,21 +7,24 @@ import com.example.callsservice.DTO.StatsHelperDTO;
 import com.example.callsservice.Entity.Call;
 import com.example.callsservice.Repository.CallMapping;
 import com.example.callsservice.Repository.CallRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class CallService {
 
     private final CallRepository callRepository;
     private final CallMapping callMapping;
+
+    public CallService(CallRepository callRepository, CallMapping callMapping) {
+        this.callRepository = callRepository;
+        this.callMapping = callMapping;
+    }
 
     public Page<CallDTO> getAllCalls(Call.Type type, Pageable pageable) {
         Page<Call> calls;

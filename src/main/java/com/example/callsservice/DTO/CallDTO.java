@@ -1,17 +1,16 @@
 package com.example.callsservice.DTO;
 
 import com.example.callsservice.Entity.Call;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class CallDTO {
     private Long id;
     @NotNull
