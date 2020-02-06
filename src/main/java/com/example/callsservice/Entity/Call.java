@@ -32,6 +32,7 @@ public class Call {
     @Column(nullable = false)
     private Date endTime;
     @Column(nullable = false, name = "type")
+    @Enumerated(EnumType.STRING)
     private Type type;
     @Transient
     private Double totalPrice;

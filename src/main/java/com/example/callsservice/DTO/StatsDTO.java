@@ -11,11 +11,11 @@ import java.util.List;
 @Setter
 @ToString
 public class StatsDTO {
-    private Date dateOfStats;
-    private String totalCallTimeInbound;
-    private String totalCallTimeOutbound;
-    private int totalCalls;
-    private List<StatsHelperDTO> numberOfCallsByCallerNumber;
-    private List<StatsHelperDTO> numberOfCallsByCalleeNumber;
-    private double totalCallCost;
+        private Date dateOfStats;
+        private String totalCallTimeInbound;
+        private String totalCallTimeOutbound;
+        private int totalCalls;
+        private List<StatsHelperDTO> numberOfCallsByCallerNumber;
+        private List<StatsHelperDTO> numberOfCallsByCalleeNumber;
+        private double totalCallCost;
 }

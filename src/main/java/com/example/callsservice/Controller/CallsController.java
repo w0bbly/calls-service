@@ -1,5 +1,6 @@
 package com.example.callsservice.Controller;
 
+import com.example.callsservice.Config.ResponseMessage;
 import com.example.callsservice.DTO.CallDTO;
 import com.example.callsservice.DTO.StatsDTO;
 import com.example.callsservice.Entity.Call;
@@ -39,12 +40,12 @@ public class CallsController {
     }
 
     @DeleteMapping(path = "/all")
-    public ResponseEntity<String> deleteAllCalls() { return ResponseEntity.ok(callService.deleteAllCalls()); }
+    public ResponseEntity<ResponseMessage> deleteAllCalls() { return ResponseEntity.ok(callService.deleteAllCalls()); }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<String> deleteCallById(@PathVariable Long id) {
-        String response = callService.deleteCallById(id);
-        if (response.contains("Error")) {
+    public ResponseEntity<ResponseMessage> deleteCallById(@PathVariable Long id) {
+        ResponseMessage response = callService.deleteCallById(id);
+        if (response.getMessage().contains("Error")) {
             return ResponseEntity.status(401).body(response);
         } else return ResponseEntity.ok(response);
     }

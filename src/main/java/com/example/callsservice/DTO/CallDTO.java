@@ -13,6 +13,7 @@ import java.util.Date;
 @Setter
 @ToString
 public class CallDTO {
+    private Long id;
     @NotNull
     private String callerNumber;
     @NotNull

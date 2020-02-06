@@ -1,30 +1,27 @@
 package com.example.callsservice.Service;
 
+import com.example.callsservice.Config.ResponseMessage;
 import com.example.callsservice.DTO.CallDTO;
 import com.example.callsservice.DTO.StatsDTO;
 import com.example.callsservice.DTO.StatsHelperDTO;
 import com.example.callsservice.Entity.Call;
 import com.example.callsservice.Repository.CallMapping;
 import com.example.callsservice.Repository.CallRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CallService {
 
-    @Autowired
-    private CallRepository callRepository;
-    @Autowired
-    private CallMapping callMapping;
+    private final CallRepository callRepository;
+    private final CallMapping callMapping;
 
     public Page<CallDTO> getAllCalls(Call.Type type, Pageable pageable) {
         Page<Call> calls;
@@ -46,24 +43,24 @@ public class CallService {
 
     public List<CallDTO> createCalls(List<CallDTO> callDTOS) {
         List<Call> calls;
-        calls = callDTOS.stream().map(callDTO -> callMapping.toEntity(callDTO)).collect(Collectors.toList());
+        calls = callDTOS.stream().map(callMapping::toEntity).collect(Collectors.toList());
         callRepository.saveAll(calls);
         return callMapping.toDto(calls);
     }
 
-    public String deleteAllCalls() {
+    public ResponseMessage deleteAllCalls() {
         callRepository.deleteAll();
-        return "All calls deleted!";
+        return new ResponseMessage("All calls deleted!");
     }
 
-    public String deleteCallById(Long id) {
+    public ResponseMessage deleteCallById(Long id) {
         Optional<Call> call = callRepository.findById(id);
 
         if (call.isPresent()) {
             callRepository.delete(call.get());
-            return "Call with id -> " + id + "deleted!";
+            return new ResponseMessage("Call with id -> " + id + "deleted!");
         } else
-            return "Error while deleting call with id -> " + id;
+            return new ResponseMessage("Error while deleting call with id -> " + id);
     }
 
     public List<StatsDTO> getStatistics() {
