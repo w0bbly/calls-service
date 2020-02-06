@@ -5,9 +5,7 @@ import com.example.callsservice.DTO.CallDTO;
 import com.example.callsservice.DTO.StatsDTO;
 import com.example.callsservice.Entity.Call;
 import com.example.callsservice.Service.CallService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,8 +18,11 @@ import java.util.List;
 @RequestMapping(path = "/calls")
 public class CallsController {
 
-    @Autowired
-    private CallService callService;
+    private final CallService callService;
+
+    public CallsController(CallService callService) {
+        this.callService = callService;
+    }
 
     @GetMapping(path = "/all")
     public ResponseEntity<Page<CallDTO>> getAllCalls(@RequestParam(required = false) Call.Type type, Pageable pageable) {
