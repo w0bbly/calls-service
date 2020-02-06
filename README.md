@@ -8,9 +8,9 @@ A aplicação como é desenvolvida em Spring Boot contém um servidor aplicacion
 
 Dentro da pasta resources no projecto podemos encontrar um ficheiro application.properties que contém as configs de ligação com a BD
 
-# Username : postgres
-# Password : admin
-# DB_NAME : calls_db
+# spring.datasource.username : postgres
+# spring.datasource.password : admin
+# spring.datasource.url : calls_db
 
 Estas definições podem ser alteradas consoante os dados utilizados para criar a BD em Postgres. Fica ao critério de quem for testar!
 
